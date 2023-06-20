@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const app = express();
 const connectDB = require("./config/db");
+const authRoute = require("./routes/authRoute");
 
 // Configuring the dotenv file
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use("/api/auth", authRoute);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the chat server");
