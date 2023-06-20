@@ -2,6 +2,7 @@ const express = require("express");
 const registerController = require("../controllers/auth/registerController");
 const loginController = require("../controllers/auth/loginController");
 const Joi = require("joi");
+const verifyToken = require("../middleware/authMiddleware");
 const validator = require("express-joi-validation").createValidator({});
 
 const router = express.Router();
@@ -22,6 +23,11 @@ const loginSchema = Joi.object({
 // API Requests
 router.post("/register", validator.body(registerSchema), registerController);
 router.post("/login", validator.body(loginSchema), loginController);
+
+// Test Routes
+router.get("/test", verifyToken, (req, res) => {
+  res.send("Request Passed");
+});
 
 // Exporting the module
 module.exports = router;
